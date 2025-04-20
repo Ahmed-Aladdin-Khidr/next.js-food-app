@@ -1,9 +1,14 @@
 import Image from "next/image";
 import classes from "./page.module.css";
 import { getMeal } from "@/lib/meals";
+import { notFound } from "next/navigation";
 
 export default function MealDetailsPage({ params }) {
   const meal = getMeal(params.mealSlug);
+
+  if (!meal) {
+    notFound(); // This will trigger a 404 page if the meal is not found
+  }
 
   meal.instructions = meal.instructions.replace(/\n/g, "<br />");
 
